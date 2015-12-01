@@ -22,9 +22,7 @@ class Post < ActiveRecord::Base
 
   def remove_tags(string)
     tags.each do |item|
-      unless string.split(/[\s, ]/).include?(item.name)
-        tags.destroy(item)
-      end
+      tags.destroy(item) unless string.split(/[\s, ]/).include?(item.name)
     end
   end
 

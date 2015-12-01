@@ -13,28 +13,30 @@
   <table class="table table-striped">
     <% @posts.each do |post| %>
         <tr id=<%= "post-row-#{post.id}" %>>
-          <td>
+          <td style="width: 15%; max-width: 15%;">
+            <h4 class="post-author">
+              <%= post.author %>
+            </h4>
+            <br>
+            <div class="post-tags">
+              <%= post.tags.sort{ |a,b| b.posts_count <=> a.posts_count }.map { |tag|
+                link_to tag.name, filter_posts_path(:tag_name => tag.name), class: "filter-by-tag"
+              }.join(',').html_safe %>
+            </div>
+          </td>
+          <td style="width: 70%;">
             <h4 class="post-title">
               <%= post.title %>
             </h4>
-
-            <div class="post-author">
-              <%= post.author %>
-            </div>
-          </td>
-          <td>
+            <hr class="style-three">
             <p class="post-body">
               <%= post.body %>
             </p>
-            <hr class="style-three">
-            <div class="post-tags">
-              <%= post.tags.sort{ |a,b| b.posts_count <=> a.posts_count }.map { |tag|
-                    link_to tag.name, filter_posts_path(:tag_name => tag.name), class: "filter-by-tag"
-               }.join(',').html_safe %>
-            </div>
           </td>
-          <td><%= link_to 'Edit', edit_post_path(post), class: "btn btn-default" %>
-            <%= link_to 'Delete', post_path(post), method: :delete, class: "btn btn-danger" %></td>
+          <td style="width: 15%;">
+            <%= link_to 'Edit', edit_post_path(post), class: "btn btn-default" %>
+            <%= link_to 'Delete', post_path(post), method: :delete, class: "btn btn-danger" %>
+          </td>
         </tr>
     <% end %>
   </table>
