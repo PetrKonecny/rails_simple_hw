@@ -8,6 +8,7 @@ class Post < ActiveRecord::Base
     string.split(/[\s, ]/).uniq.each do |name|
       sync_tag(name)
     end
+    remove_tags(string)
   end
 
   def sync_tag(name)
@@ -16,6 +17,14 @@ class Post < ActiveRecord::Base
       tags << Tag.new(name: name)
     elsif tags.select { |item| item.name.eql?(name) }.blank?
       tags << tag
+    end
+  end
+
+  def remove_tags(string)
+    tags.each do |item|
+      unless string.split(/[\s, ]/).include?(item.name)
+        tags.destroy(item)
+      end
     end
   end
 
