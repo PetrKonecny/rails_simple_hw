@@ -1,0 +1,41 @@
+<div class="container">
+  <a href="/">
+    <h1 class="text-center alert alert-info">Posts</h1>
+  </a>
+  <hr class="style-three">
+  <h2>Filter by tag : <%= @tag_name %></h2>
+  <% @tags.each do |tag| %>
+      <%= link_to tag.name, filter_posts_path(:tag_name => tag.name) %>
+  <% end %>
+  <hr class="style-three">
+  <%= link_to 'New', new_post_path, class: "btn btn-primary" %>
+  <hr class="style-three">
+  <table class="table table-striped">
+    <% @posts.each do |post| %>
+        <tr id=<%= "post-row-#{post.id}" %>>
+          <td>
+            <h4 class="post-title">
+              <%= post.title %>
+            </h4>
+
+            <div class="post-author">
+              <%= post.author %>
+            </div>
+          </td>
+          <td>
+            <p class="post-body">
+              <%= post.body %>
+            </p>
+            <hr class="style-three">
+            <div class="post-tags">
+              <%= post.tags.sort{ |a,b| b.posts_count <=> a.posts_count }.map { |tag|
+                    link_to tag.name, filter_posts_path(:tag_name => tag.name), class: "filter-by-tag"
+               }.join(',').html_safe %>
+            </div>
+          </td>
+          <td><%= link_to 'Edit', edit_post_path(post), class: "btn btn-default" %>
+            <%= link_to 'Delete', post_path(post), method: :delete, class: "btn btn-danger" %></td>
+        </tr>
+    <% end %>
+  </table>
+</div>
