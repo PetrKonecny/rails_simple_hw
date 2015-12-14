@@ -5,7 +5,7 @@ class Post < ActiveRecord::Base
   after_destroy :delete_empty_tags
 
   def tags_string=(string)
-    string.split(/[\s, ]/).uniq.each do |name|
+    string.split(/[\s, ]/).uniq.reject(&:empty?).each do |name|
       sync_tag(name)
     end
     remove_tags(string)
