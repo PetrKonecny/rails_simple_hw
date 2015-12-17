@@ -5,7 +5,7 @@
   <hr class="style-three">
   <h2>Filter by tag : <%= @tag_name %></h2>
   <% @tags.each do |tag| %>
-      <%= link_to tag.name, filter_posts_path(:tag_name => tag.name) %>
+      <%= link_to tag.name, filter_posts_path(:tag_name => tag.name), class: "filter-by-tag" %>
   <% end %>
   <hr class="style-three">
   <%= link_to 'New', new_post_path, class: "btn btn-primary" %>
@@ -19,9 +19,7 @@
             </h4>
             <br>
             <div class="post-tags">
-              <%= post.tags.sort{ |a,b| b.posts_count <=> a.posts_count }.map { |tag|
-                link_to tag.name, filter_posts_path(:tag_name => tag.name), class: "filter-by-tag"
-              }.join(',').html_safe %>
+              <%= post.tags_string %>
             </div>
           </td>
           <td style="width: 70%;">
