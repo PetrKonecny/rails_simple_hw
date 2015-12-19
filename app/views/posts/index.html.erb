@@ -1,0 +1,41 @@
+<div class="container">
+  <a href="/">
+    <h1 class="text-center alert alert-info">Posts</h1>
+  </a>
+  <hr class="style-three">
+  <h2>Filter by tag : <%= @tag_name %></h2>
+  <% @tags.each do |tag| %>
+      <%= link_to tag.name, filter_posts_path(:tag_name => tag.name), class: "filter-by-tag" %>
+  <% end %>
+  <hr class="style-three">
+  <%= link_to 'New', new_post_path, class: "btn btn-primary" %>
+  <hr class="style-three">
+  <table class="table table-striped">
+    <% @posts.each do |post| %>
+        <tr id=<%= "post-row-#{post.id}" %>>
+          <td style="width: 15%; max-width: 15%;">
+            <h4 class="post-author">
+              <%= post.author %>
+            </h4>
+            <br>
+            <div class="post-tags">
+              <%= post.tags_string %>
+            </div>
+          </td>
+          <td style="width: 70%;">
+            <h4 class="post-title">
+              <%= post.title %>
+            </h4>
+            <hr class="style-three">
+            <p class="post-body">
+              <%= post.body %>
+            </p>
+          </td>
+          <td style="width: 15%;">
+            <%= link_to 'Edit', edit_post_path(post), class: "btn btn-default" %>
+            <%= link_to 'Delete', post_path(post), method: :delete, class: "btn btn-danger" %>
+          </td>
+        </tr>
+    <% end %>
+  </table>
+</div>
